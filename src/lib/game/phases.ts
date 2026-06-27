@@ -4,31 +4,40 @@ export const phaseOrder: GamePhase[] = [
   "joining",
   "deal",
   "lecture",
-  "rumeurs",
-  "questions",
+  "enquete",
   "pouvoirs",
   "conseil",
   "resolution",
 ];
 
+function normalizePhase(phase: GamePhase | "rumeurs" | "questions"): GamePhase {
+  if (phase === "rumeurs" || phase === "questions") {
+    return "enquete";
+  }
+
+  return phase;
+}
+
 export function nextPhase(game: Game, now = new Date().toISOString()): Game {
-  if (game.phase === "finished") {
+  const phase = normalizePhase(game.phase);
+
+  if (phase === "finished") {
     return game;
   }
 
-  const index = phaseOrder.indexOf(game.phase);
+  const index = phaseOrder.indexOf(phase);
   if (index === -1) {
     return { ...game, phase: "joining", updatedAt: now };
   }
 
-  if (game.phase === "resolution") {
+  if (phase === "resolution") {
     if (game.round >= game.maxRounds) {
       return { ...game, phase: "finished", updatedAt: now };
     }
 
     return {
       ...game,
-      phase: "rumeurs",
+      phase: "enquete",
       round: game.round + 1,
       updatedAt: now,
     };

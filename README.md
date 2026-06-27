@@ -38,6 +38,18 @@ npm run build
 npm audit --audit-level=moderate
 ```
 
+## Phases de jeu
+
+La boucle V1 garde un rythme simple:
+
+1. Connexion des joueurs.
+2. Distribution des cartes.
+3. Lecture silencieuse.
+4. Enquete: discussion libre, questions, bluff et recoupement des fragments.
+5. Pouvoirs.
+6. Conseil: accusations officielles.
+7. Resolution: verdict du narrateur via le mode maitre.
+
 ## Docker
 
 ```bash

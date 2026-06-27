@@ -12,8 +12,7 @@ export type RoleCategory =
 
 export type RoleTiming =
   | "lecture"
-  | "rumeurs"
-  | "questions"
+  | "enquete"
   | "pouvoirs"
   | "conseil"
   | "resolution"
@@ -70,8 +69,7 @@ export type GamePhase =
   | "joining"
   | "deal"
   | "lecture"
-  | "rumeurs"
-  | "questions"
+  | "enquete"
   | "pouvoirs"
   | "conseil"
   | "resolution"
