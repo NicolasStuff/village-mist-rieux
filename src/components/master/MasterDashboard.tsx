@@ -6,12 +6,10 @@ import { Copy, RefreshCw } from "lucide-react";
 import type { AccusationInput, MasterSnapshot } from "@/lib/game/types";
 import { ghostButtonClass } from "@/lib/ui";
 import { PhaseController } from "@/components/game/PhaseController";
-import { ConnectionBoard } from "@/components/master/ConnectionBoard";
 import { TruthTable } from "@/components/master/TruthTable";
 import { AccusationForm } from "@/components/master/AccusationForm";
 import { VerdictPanel } from "@/components/master/VerdictPanel";
 import { NarratorScript } from "@/components/master/NarratorScript";
-import { PowerResolutionPanel } from "@/components/master/PowerResolutionPanel";
 
 export function MasterDashboard() {
   const router = useRouter();
@@ -58,6 +56,11 @@ export function MasterDashboard() {
     await load();
   }, [load]);
 
+  const resolveAccusation = useCallback(
+    (accusation: AccusationInput) => action({ action: "accuse", accusation }),
+    [action],
+  );
+
   useEffect(() => {
     const initialLoad = window.setTimeout(() => void load(), 0);
     const timer = window.setInterval(() => void load(), 5000);
@@ -76,6 +79,9 @@ export function MasterDashboard() {
   }
 
   const joinUrl = `${origin}/join`;
+  const phase = snapshot.phase ?? "joining";
+  const isResolutionPhase = phase === "resolution";
+  const showCouncilAccusationForm = phase === "conseil";
 
   return (
     <div className="grid gap-6">
@@ -102,32 +108,34 @@ export function MasterDashboard() {
       {error ? <p className="rounded-md bg-red-950/50 p-3 text-red-200">{error}</p> : null}
 
       <PhaseController
-        phase={snapshot.phase ?? "joining"}
+        phase={phase}
         round={snapshot.round ?? 1}
         maxRounds={snapshot.maxRounds ?? 1}
         onAdvance={() => action({ action: "advancePhase" })}
       />
-      <div className="grid gap-5 xl:grid-cols-[1fr_420px]">
-        <div className="grid gap-5">
-          <ConnectionBoard
-            players={snapshot.truth.players}
-            onReassign={(playerId) => action({ action: "reassign", playerId })}
-          />
-          <TruthTable players={snapshot.truth.players} />
-          <AccusationForm
-            players={snapshot.truth.players}
-            onSubmit={(accusation: AccusationInput) => action({ action: "accuse", accusation })}
-          />
+
+      {isResolutionPhase ? (
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,420px)]">
+          <AccusationForm players={snapshot.truth.players} featured onSubmit={resolveAccusation} />
+          <div className="grid content-start gap-5">
+            <NarratorScript text={lastAccusation?.narratorText} />
+            <VerdictPanel accusation={lastAccusation} />
+          </div>
         </div>
-        <div className="grid content-start gap-5">
-          <NarratorScript text={lastAccusation?.narratorText} />
-          <VerdictPanel accusation={lastAccusation} />
-          <PowerResolutionPanel
-            players={snapshot.truth.players}
-            onHeal={(playerId) => action({ action: "heal", playerId })}
-          />
+      ) : (
+        <div className="grid gap-5 xl:grid-cols-[1fr_420px]">
+          <div className="grid gap-5">
+            <TruthTable players={snapshot.truth.players} />
+            {showCouncilAccusationForm ? (
+              <AccusationForm players={snapshot.truth.players} featured onSubmit={resolveAccusation} />
+            ) : null}
+          </div>
+          <div className="grid content-start gap-5">
+            <NarratorScript text={lastAccusation?.narratorText} />
+            <VerdictPanel accusation={lastAccusation} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -4,14 +4,16 @@ import { useMemo, useState } from "react";
 import { Gavel } from "lucide-react";
 import { allSecrets, getSecret } from "@/lib/game/catalog/secrets";
 import type { AccusationInput, Player } from "@/lib/game/types";
-import { buttonClass } from "@/lib/ui";
+import { buttonClass, cn } from "@/lib/ui";
 
 export function AccusationForm({
   players,
   onSubmit,
+  featured = false,
 }: {
   players: Player[];
   onSubmit: (input: AccusationInput) => void;
+  featured?: boolean;
 }) {
   const [accuserId, setAccuserId] = useState("");
   const [targetOne, setTargetOne] = useState("");
@@ -31,7 +33,7 @@ export function AccusationForm({
   }
 
   return (
-    <section className="panel p-4">
+    <section className={cn("panel p-4", featured && "panel-featured")}>
       <h2 className="text-xl font-black text-stone-50">Accusation</h2>
       <div className="mt-4 grid gap-3">
         <div className="grid gap-3 sm:grid-cols-3">
@@ -80,7 +82,7 @@ export function AccusationForm({
           </select>
         </label>
         <div className="rounded-md border border-stone-800 bg-stone-950/50 p-3 text-sm text-stone-300">
-          Elements envoyes au moteur: {selectedSecret.elements.lieu}, {selectedSecret.elements.objet},{" "}
+          Elements a verifier: {selectedSecret.elements.lieu}, {selectedSecret.elements.objet},{" "}
           {selectedSecret.elements.action}, {selectedSecret.elements.mobile}
         </div>
         <button className={buttonClass} disabled={!accuserId || !targetOne || !secretId} onClick={submit} type="button">

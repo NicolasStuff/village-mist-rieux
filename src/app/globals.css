@@ -43,6 +43,15 @@ textarea {
   backdrop-filter: blur(10px);
 }
 
+.panel-featured {
+  border-color: rgba(252, 211, 77, 0.58);
+  background: linear-gradient(180deg, rgba(55, 38, 19, 0.9), rgba(20, 18, 14, 0.94));
+  box-shadow:
+    0 22px 62px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(252, 211, 77, 0.08),
+    0 0 38px rgba(252, 211, 77, 0.12);
+}
+
 .card-frame {
   border: 1px solid rgba(245, 218, 154, 0.22);
   border-radius: 8px;
