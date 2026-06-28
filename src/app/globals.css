@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+:root {
+  --background: #11100d;
+  --foreground: #f7f0df;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.page-shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(15, 23, 20, 0.72), rgba(18, 16, 13, 0.96)),
+    radial-gradient(circle at 20% 0%, rgba(140, 36, 42, 0.22), transparent 34%),
+    radial-gradient(circle at 88% 18%, rgba(199, 149, 58, 0.18), transparent 28%),
+    url("/assets/backgrounds/village-evening.webp");
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.panel {
+  border: 1px solid rgba(245, 218, 154, 0.16);
+  border-radius: 8px;
+  background: rgba(22, 20, 17, 0.84);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.panel-featured {
+  border-color: rgba(252, 211, 77, 0.58);
+  background: linear-gradient(180deg, rgba(55, 38, 19, 0.9), rgba(20, 18, 14, 0.94));
+  box-shadow:
+    0 22px 62px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(252, 211, 77, 0.08),
+    0 0 38px rgba(252, 211, 77, 0.12);
+}
+
+.card-frame {
+  border: 1px solid rgba(245, 218, 154, 0.22);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(55, 38, 30, 0.86), rgba(17, 16, 14, 0.92));
+  padding: 10px;
+}
+
+.reveal-card {
+  width: 100%;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.reveal-card:hover {
+  border-color: rgba(252, 211, 77, 0.58);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+  transform: translateY(-2px);
+}
+
+.reveal-card:focus-visible {
+  outline: 2px solid #f6c95b;
+  outline-offset: 4px;
+}
+
+.reveal-card-image {
+  transition: transform 220ms ease;
+}
+
+.reveal-card:hover .reveal-card-image {
+  transform: scale(1.03);
+}
+
+.field-label {
+  display: grid;
+  gap: 0.45rem;
+  color: #f7e5b6;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid rgba(245, 218, 154, 0.18);
+  border-radius: 8px;
+  background: rgba(9, 9, 8, 0.72);
+  color: #f8f1df;
+  padding: 0.85rem 0.95rem;
+  outline: none;
+}
+
+.field:focus {
+  border-color: rgba(252, 211, 77, 0.74);
+  box-shadow: 0 0 0 2px rgba(252, 211, 77, 0.2);
+}
+
+.tab,
+.tab-active {
+  min-height: 2.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 218, 154, 0.2);
+  padding: 0.5rem 1rem;
+  color: #f8f1df;
+  transition: 160ms ease;
+}
+
+.tab {
+  background: rgba(12, 12, 10, 0.52);
+}
+
+.tab-active {
+  background: #f6c95b;
+  color: #17130d;
+  font-weight: 900;
+}
